@@ -36,7 +36,7 @@ const Header = () => {
             <HiMiniBars3BottomLeft className="h-6 w-6" />
           </div>
           <div className="flex">
-            <Link to="/" className="font-bold text-2xl lg:text-3xl">MunchHub</Link>
+            <Link to='./' className="font-bold text-2xl lg:text-3xl">MunchHub</Link>
           </div>
 
           <div className="flex flex-1 justify-end gap-8">

@@ -8,6 +8,8 @@ const Cart = () => {
   const { cartState, cartDispatch } = useCart()
   const { cartItems } = cartState
 
+  console.log(cartState)
+
   const incrementQuantity = item => {
     cartDispatch ({
       type: "INCREMENT_QUANTITY",

@@ -11,7 +11,10 @@ import Checkout from "./pages/Checkout";
 import { UserAuthProvider } from "./utils/UserAuthContext";
 import { CartProvider } from "./utils/CartContext";
 import PrivateRoutes from "./utils/PrivateRoutes";
-import AdminPanel from "./Components/Admin/AdminPanel";
+import AdminDashboard from "./Components/Admin/Admin-dashboard";
+import RestaurantsList from "./Components/Admin/RestaurantsList";
+import OwnersList from "./Components/Admin/OwnersList";
+import UsersList from "./Components/Admin/UsersList";
 
 
 
@@ -22,6 +25,7 @@ function App() {
   const router = createBrowserRouter( 
    createRoutesFromElements(
     <Route path="/" element = {<Layout/>}>
+{/* <<<<<<< HEAD
     <Route index element= {<Home />}/>
     <Route element={<PrivateRoutes/>}>
       <Route path="admin-panel" element = {<AdminPanel/>}/>
@@ -32,6 +36,21 @@ function App() {
     </Route>
     <Route path="login" element = {<Login/>}/>
     <Route path="sign" element = {<Sign/>}/>
+======= */}
+      <Route index element= {<Home />}/>
+      <Route element={<PrivateRoutes/>}>
+      </Route>
+      <Route path="cart" element = {<Cart/>}/>
+      <Route path="our-menu" element = {<OurMenu/>}/>
+      <Route path="checkout" element = {<Checkout/>}/>
+      <Route path="login" element = {<Login/>}/>
+      <Route path="sign" element = {<Sign/>}/>
+      <Route path="admin-panel" element = {<AdminDashboard/>}>
+        <Route path="create-restaurant" element ={<AddRestaurant/>}/>
+        <Route path="restaurants-list" index element= {<RestaurantsList/>}/>
+        <Route path="owners-list" element= {<OwnersList/>}/>
+        <Route path="users-list" element= {<UsersList/>}/>
+      </Route>
     </Route>
    ) 
   )

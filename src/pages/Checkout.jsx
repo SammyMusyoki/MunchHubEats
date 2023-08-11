@@ -125,7 +125,7 @@ const Checkout = () => {
                     </label>
                     <select
                       id="small"
-                      className="block w-full px-3 py-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 "
+                      className="block w-full p-1.2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 "
                     >
                       <option selected>Choose your county</option>
                       <option value="US">Nairobi</option>

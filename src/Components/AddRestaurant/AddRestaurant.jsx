@@ -1,40 +1,77 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useUserAuth } from '../../utils/UserAuthContext'
 
 const AddRestaurant = () => {
+    const { addRestaurant} = useUserAuth()
+    const [resName, setResName] = useState('')
+    const [resImage, setResImage] = useState('')
+    const [resContact, setResContact] = useState('')
+    const [resOpenHours, setResOpenHours] = useState('')
+    const [resCloseHours, setResCloseHours] = useState('')
+    const [resPayMeth, setResPayMeth] = useState('')
+
+    const navigate = useNavigate()
+
+    const restaurantInfo = {
+        resCloseHours,
+        resContact,
+        resImage,
+        resName,
+        resPayMeth,
+        resOpenHours
+
+    }
+
+    const handleCreateRestaurant = (e) => {
+        e.preventDefault()
+        addRestaurant(restaurantInfo)
+    }
+
   return (
     <React.Fragment>
-        <div className='w-96 mx-auto py-16'>
-          <form className='border p-8'>
-                <div className=''>
-                    <h2 className='font-bold text-2xl py-1'>Get Started</h2>
+        <div className='max-w-3xl mx-auto'>
+            <h2>Create New Restaurant</h2>
+            <form action="" className='flex flex-col space-y-4'>
+                <div className='flex flex-col'>
+                    <label htmlFor="Restaurant Name">Restaurant Name</label>
+                    <input 
+                    onChange={(e) => setResName(e.target.value)}
+                    type="text" name="restaurant_name" id="restaurant_name" />
                 </div>
-                <div className='py-2'>
-                    <Link className=''>Already have an account?</Link>
+                <div className='flex flex-col'>
+                    <label htmlFor="image">Add Image</label>
+                    <input 
+                    onChange={(e) => setResImage(e.target.value)}
+                    type="file" name="image" id="image" className='border'/>  
                 </div>
-                 <div class="mb-6">
-                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                    <input type="name" id="name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Username" required/>
+                <div className='flex flex-col'>
+                    <label htmlFor="">Restaurant Contact</label>
+                    <input 
+                    onChange={(e) => setResContact(e.target.value)}                   
+                    type="text" name="contact" id="contact" />
                 </div>
-                <div class="mb-6">
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                    <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="" required/>
+                <div className='flex flex-col'>
+                    <label htmlFor="opening_time">Opening Time</label>
+                    <input 
+                    onChange={(e) => setResOpenHours(e.target.value)}
+                    type="time" name="opening_time" id="opening_time" />
                 </div>
-                 <div class="mb-6">
-                    <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Store address</label>
-                    <input type="address" id="address" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Store address" required/>
+                <div className='flex flex-col'>
+                    <label htmlFor="opening_time">Closing Time</label>
+                    <input 
+                    onChange={(e) => setResCloseHours(e.target.value)}
+                    type="time" name="closing_time" id="closing_time" />
                 </div>
-                  <div class="mb-6">
-                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Store name</label>
-                    <input type="name" id="name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Store name" required/>
+                <div className='flex flex-col'>
+                    <label htmlFor="payment_method">Payment Method</label>
+                    <input 
+                    onChange={(e) => setResPayMeth(e.target.value)}
+                    type="text" name="payment_method" id="payment_method" />
                 </div>
-                <div class="flex items-start mb-6">
-                    <div class="flex items-center h-5">
-                    <input id="terms" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required/>
-                    </div>
-                    <label for="terms" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a></label>
-                </div>
-                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register your restaurant</button>
+                <button onClick={handleCreateRestaurant} className='border-2 bg-yellow-400 p-1 rounded-md'>
+                    Create Restaurant
+                </button>
             </form>
         </div>
     </React.Fragment>

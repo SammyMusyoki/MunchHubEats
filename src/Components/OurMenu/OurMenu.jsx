@@ -1,14 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import MenuCard from '../Menu/Features/MenuCard'
 import { useCart } from '../../utils/CartContext'
+import { useUserAuth } from '../../utils/UserAuthContext'
+
+const baseURL = "http://127.0.0.1:5000"
 
 const OurMenu = () => {
+
     const [menu, setMenu] = useState([]);
+    // const { setIsLoading } = useUserAuth()
+
     useEffect(() => {
-      fetch("http://localhost:3000/menus")
-        .then((r) => r.json())
-        .then((menu) => setMenu(menu));
-    }, []);
+      getAllMenus()
+    }, [])
+const getAllMenus = async () => {
+    // setIsLoading(true);
+
+    try {
+        const response = await fetch(`${baseURL}/menus`, {
+          mode: 'no-cors'
+        });
+        const data = await response.json();
+        setMenu(data);
+        console.log('All Menus Fetched Successfully');
+    } catch (err) {
+        console.log("Error fetching Owners", err);
+    }
+
+    // setIsLoading(false);
+};
 
   const { cartDispatch } = useCart()
 
