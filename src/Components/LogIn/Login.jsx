@@ -13,8 +13,8 @@ const Login = () => {
     }
 
     const handleLogin = (e) => {
-        e.preventDefault()
-        loginUser(userInfo)
+        e.preventDefault(userInfo)
+        loginUser()
     }
 
     const handleNavigateRegister = () => {

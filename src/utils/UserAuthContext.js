@@ -9,8 +9,8 @@ const UserAuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [restaurants, setRestaurants] = useState([])
     const [loading, setIsLoading] = useState(true)
-    const [isAdmin, setIsAdmin] = useState(false)
-    const [authenticaated, setAuthenticaated] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(true)
+    const [authenticated, setAuthenticated] = useState(false)
 
     useEffect(() => {
         setTimeout(() => setIsLoading(false), 1000)
@@ -20,15 +20,29 @@ const UserAuthProvider = ({ children }) => {
     const loginUser = async (userInfo) => {
         setIsLoading(true)
 
+            console.log(userInfo);
         try{
-            const response = await axios.post(`${baseURL}/login`, userInfo)
-
+            const response = await axios.post(`${baseURL}/login`, {
+                headers: {
+                    "X-Requested-With" : "XMLHttpRequest"
+                },
+                proxy: {
+                    host: '127.0.0.1',
+                    port: 3000,
+                    protocol: 'http',
+                    auth: {
+                        userInfo
+                    }
+                }
+            })
             if (response.status === 200) {
+                console.log(response.status)
             const { token, user, redirect_url } = response.data
+            console.log(response.data)
             localStorage.setItem('token', token)
             localStorage.setItem('user', JSON.stringify(user))
             setUser(user)
-            setAuthenticaated(true)
+            setAuthenticated(true)
 
             if (redirect_url) {
                 window.location.href = redirect_url
@@ -39,13 +53,14 @@ const UserAuthProvider = ({ children }) => {
         } catch (err) {
             console.log(err)
         }
+        setAuthenticated(true)
         setIsLoading(false)
     }
 
     const logoutUser = () => {
         localStorage.removeItem('token')
         setUser(null)
-        setAuthenticaated(false)
+        setAuthenticated(false)
     }
     
     const registerUser = async (userInfo) => {
@@ -87,7 +102,8 @@ const UserAuthProvider = ({ children }) => {
     const contextData = {
         user,
         setUser,
-        authenticaated,
+        authenticated,
+        setAuthenticated,
         restaurants,
         addRestaurant,
         updateRestaurant,

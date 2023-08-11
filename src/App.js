@@ -2,8 +2,6 @@ import React from "react";
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import Layout from "./Layout/BaseLayout";
 import Home from "./pages/Home";
-import Contact from "./pages/Contact";
-import About from "./pages/About";
 import Login from "./Components/LogIn/Login";
 import Sign from "./Components/Sign/Sign";
 import AddRestaurant from "./Components/AddRestaurant/AddRestaurant";
@@ -26,11 +24,11 @@ function App() {
     <Route path="/" element = {<Layout/>}>
     <Route index element= {<Home />}/>
     <Route element={<PrivateRoutes/>}>
-    <Route path="admin-panel" element = {<AdminPanel/>}/>
-    <Route path="addyourrestaurant" element ={<AddRestaurant/>}/>
-    <Route path="cart" element = {<Cart/>}/>
-    <Route path="our-menu" element = {<OurMenu/>}/>
-    <Route path="checkout" element = {<Checkout/>}/>
+      <Route path="admin-panel" element = {<AdminPanel/>}/>
+      <Route path="addyourrestaurant" element ={<AddRestaurant/>}/>
+      <Route path="cart" element = {<Cart/>}/>
+      <Route path="our-menu" element = {<OurMenu/>}/>
+      <Route path="checkout" element = {<Checkout/>}/>
     </Route>
     <Route path="login" element = {<Login/>}/>
     <Route path="sign" element = {<Sign/>}/>
