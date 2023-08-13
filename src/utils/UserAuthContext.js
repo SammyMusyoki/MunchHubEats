@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import React, {createContext, useContext, useEffect, useState } from 'react'
 
 const UserAuthContext = createContext();
@@ -12,12 +11,35 @@ const UserAuthProvider = ({ children }) => {
     const [owners, setOwners] = useState([])
     const [loading, setIsLoading] = useState(true)
     const [isAdmin, setIsAdmin] = useState(true)
-    const [authenticated, setAuthenticated] = useState(false)
+    const [authenticaated, setAuthenticaated] = useState(false)
 
+    const [errorMessage, setErrorMessage] = useState('')
+    const [successMessage, setSuccessMessage] = useState('')
 
+    
     useEffect(() => {
-        setTimeout(() => setIsLoading(false), 1000)
+        checkUserStatus()
     }, [])
+    const checkUserStatus = async (userInfo) => {
+        try {
+            const response = await fetch("/login", {
+                method:"POST",
+                headers:{
+                    "Content-Type":
+                    "application/json"
+                },
+                body:JSON.stringify(
+                userInfo
+                )
+            });
+            const userDetails = response.json()
+            setUser(userDetails)
+            setAuthenticaated(true)
+        } catch (error) {
+            
+        }
+        setIsLoading(false)
+    }
     
     // CRUD operations for managing users.
     useEffect(() => {
@@ -25,9 +47,7 @@ const UserAuthProvider = ({ children }) => {
     }, [])
 const getAllUsers = async () => {
     try {
-        const response = await fetch(`${baseURL}/users`, {
-          mode: 'no-cors'
-        });
+        const response = await fetch(`${baseURL}/users`);
         const data = await response.json();
         setUsers(data);
         console.log(data)
@@ -64,70 +84,69 @@ const getAllUsers = async () => {
  const loginUser = async (userInfo) => {
     setIsLoading(true);
 
-    try {
-        const response = await fetch(`${baseURL}/login`, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userInfo),
-        });
+    try{
+        const response = await fetch("/login", {
+                method:"POST",
+                headers:{
+                    "Content-Type":
+                    "application/json"
+                },
+                body:JSON.stringify(
+                userInfo   
+                )
+            });
 
-        if (response.status === 200) {
-            const { token, user, redirect_url } = await response.json();
-            localStorage.setItem('token', token);
-            localStorage.setItem('user', JSON.stringify(user));
-            setUser(user);
-            setAuthenticated(true);
-
-            if (redirect_url) {
-                window.location.href = redirect_url;
+            if (response.status === 200 || response.status === 201) {
+                const userDetails = await response.json();
+                localStorage.setItem(userDetails, JSON.stringify(userDetails));
+                setUser(userDetails);
+                setAuthenticaated(true)
+                setSuccessMessage('User logged in Successfully')
+                setIsLoading(false)
+            } else {
+                console.log('Login failed')
+                const errorData = await response.json();
+                setErrorMessage('Login Failed:' + errorData.message)
             }
-        } else {
-            console.log('Login failed');
+
+        } catch (err) {
+            console.log("Error loggin User In", err)
+            setErrorMessage('Error logging User In: ' + err)
         }
 
-        setAuthenticated(true)
-        setIsLoading(false)
-
-    } catch (err) {
-        console.log(err);
-
-    }
-
-    setIsLoading(false);
+        setTimeout(() => {
+            setErrorMessage('')
+            setSuccessMessage('')
+        }, 5000)
 };
-
-
     const logoutUser = () => {
         localStorage.removeItem('token')
         setUser(null)
-        setAuthenticated(false)
+        setAuthenticaated(false)
     }
     
-const registerUser = async (userInfo) => {
+const registerUser = async (userInfo, navigate) => {
     setIsLoading(true);
-
     try {
-        const response = await fetch(`${baseURL}/register`, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userInfo),
-        });
-        console.log(userInfo)
-
-        if (response.status === 201) {
-            const { token, user} = await response.json();
-            localStorage.setItem('token', token);
-            localStorage.setItem('user', JSON.stringify(user));
-            console.log('User registered successfully');
-        }
+        const response = await fetch("/register", {
+                method:"POST",
+                headers:{
+                    "Content-Type":
+                    "application/json"
+                },
+                body:JSON.stringify(
+                userInfo   
+                )
+            });
+             if (response.status === 201 || response.status === 200) {
+                const { token, user } = await response.json();
+                localStorage.setItem('token', token);
+                localStorage.setItem('user', JSON.stringify(user));
+                navigate('login')
+                console.log('User registered successfully');
+             }
     } catch (error) {
-        console.log(error, 'Registration failed');
+        console.log(error, "Error Registering a User")
     }
 
     setIsLoading(false);
@@ -142,11 +161,9 @@ const getAllOwners = async () => {
     setIsLoading(true);
 
     try {
-        const response = await fetch(`${baseURL}/owners`, {
-            mode: 'no-cors'
-        });
-        const response_data = await response.json();
-        setOwners(response_data);
+        const response = await fetch(`${baseURL}/owners`);
+        const data = await response.json();
+        setOwners(data);
         console.log('All Owners Fetched Successfully');
     } catch (err) {
         console.log("Error fetching Owners", err);
@@ -187,9 +204,7 @@ const getAllRestaurants = async () => {
     setIsLoading(true);
 
     try {
-        const response = await fetch(`${baseURL}/restaurants`, {
-          mode: 'no-cors'
-        });
+        const response = await fetch(`${baseURL}/restaurants`);
         const data = await response.json();
         setRestaurants(data);
     } catch (err) {
@@ -214,8 +229,8 @@ const getAllRestaurants = async () => {
         user,
         users,
         setUser,
-        authenticated,
-        setAuthenticated,
+        authenticaated,
+        setAuthenticaated,
         restaurants,
         owners,
         getAllRestaurants,
@@ -228,7 +243,9 @@ const getAllRestaurants = async () => {
         loginUser,
         registerUser,
         logoutUser,
-        setIsLoading
+        setIsLoading,
+        errorMessage,
+        successMessage
     }
 
     return (

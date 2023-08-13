@@ -15,6 +15,8 @@ import AdminDashboard from "./Components/Admin/Admin-dashboard";
 import RestaurantsList from "./Components/Admin/RestaurantsList";
 import OwnersList from "./Components/Admin/OwnersList";
 import UsersList from "./Components/Admin/UsersList";
+import Profile from "./Components/Profile/Profile";
+import SearchPage from "./Components/Search/SearchPage";
 
 
 
@@ -38,19 +40,21 @@ function App() {
     <Route path="sign" element = {<Sign/>}/>
 ======= */}
       <Route index element= {<Home />}/>
-      <Route element={<PrivateRoutes/>}>
+      <Route path="search" element= {<SearchPage />}/>
+      <Route path="/home/*" element={<PrivateRoutes/>}>
+        <Route index path="our-menu" element = {<OurMenu/>}/>
+        <Route path="profile" element={<Profile/>}/>
+        <Route path="cart" element = {<Cart/>}/>
+        <Route path="checkout" element = {<Checkout/>}/>
+        <Route path="admin-panel/*" element = {<AdminDashboard/>}>
+            <Route path="create-restaurant" element ={<AddRestaurant/>}/>
+            <Route path="restaurants-list" index element= {<RestaurantsList/>}/>
+            <Route path="owners-list" element= {<OwnersList/>}/>
+            <Route path="users-list" element= {<UsersList/>}/>
+        </Route>
       </Route>
-      <Route path="cart" element = {<Cart/>}/>
-      <Route path="our-menu" element = {<OurMenu/>}/>
-      <Route path="checkout" element = {<Checkout/>}/>
       <Route path="login" element = {<Login/>}/>
       <Route path="sign" element = {<Sign/>}/>
-      <Route path="admin-panel" element = {<AdminDashboard/>}>
-        <Route path="create-restaurant" element ={<AddRestaurant/>}/>
-        <Route path="restaurants-list" index element= {<RestaurantsList/>}/>
-        <Route path="owners-list" element= {<OwnersList/>}/>
-        <Route path="users-list" element= {<UsersList/>}/>
-      </Route>
     </Route>
    ) 
   )

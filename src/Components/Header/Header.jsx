@@ -41,14 +41,16 @@ const Header = () => {
 
           <div className="flex flex-1 justify-end gap-8">
             <span>
-              <FaSearch className=" h-6 w-6" />
+              <Link to='search'>
+                <FaSearch className=" h-6 w-6" />
+              </Link>
             </span>
 
             <div className="flex items-center justify-center">
               <span className="flex text-sm items-center justify-center h-5 w-5 relative bottom-2 left-9 bg-yellow-400 rounded-full text-gray-50 flex-shrink-0">
                 {cartItemCount}
               </span>
-              <Link to="/Cart">
+              <Link to="home/Cart">
                 <span>
                   <FaShoppingCart className=" h-6 w-6" />
                 </span>

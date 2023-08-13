@@ -13,7 +13,7 @@ import DeliveryApp from '../Components/DeliveryApp/DeliveryApp';
 const Home = () => {
   const [data, setData] = useState([])
    useEffect(() => {
-    fetch('http://localhost:3000/restaurants')
+    fetch('http://localhost:5000/restaurants')
     .then((r) => r.json())
     .then((data) => setData(data))
     
@@ -22,11 +22,13 @@ const Home = () => {
 
   const [menu, setMenu] = useState([])
      useEffect(() => {
-    fetch('http://localhost:3000/menus')
+    fetch('http://localhost:5000/menus')
     .then((r) => r.json())
     .then((menu) => setMenu(menu))
     
   },[])
+
+
   return (
     <React.Fragment>
       <header className='bg-hero bg-center bg-cover bg-no-repeat h-screen w-full relative isolate  bg-black'>
@@ -34,7 +36,7 @@ const Home = () => {
         <BodyHeader/>
       </header>
       <OurRestaurant data = {data}/>
-      <Menu menu = {menu}/>
+      <Menu menu = {menu} numberOfItemsToShow={8}/>
       {/* <UniqueDining/> */}
       <Discount/>
       <Display/>

@@ -1,20 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useUserAuth } from '../../utils/UserAuthContext'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
-    const { loginUser } =  useUserAuth();
+    const { user,loginUser, errorMessage, successMessage } =  useUserAuth();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate()
 
+    useEffect(()=> {
+        if (user) {
+            navigate('/home')
+        }
+    })
     const userInfo = {
         email,
-        password
+        password,
     }
 
     const handleLogin = (e) => {
-        e.preventDefault(userInfo)
-        loginUser()
+        e.preventDefault()
+        loginUser(userInfo, navigate)
     }
 
     const handleNavigateRegister = () => {
@@ -27,6 +33,10 @@ const Login = () => {
             <div className='text-center my-3'>
                 <h1 className='text-2xl font-bold text-center'>MunchHub Login</h1>
                 <p>Do not have an account? <button type='button' onClick={handleNavigateRegister} className='text-yellow-400'>Register</button></p>
+            </div>
+            <div className='text-center my-2'>
+                {errorMessage && <p className='bg-red-600 p-2 rounded-md'>{errorMessage}</p>}
+                {successMessage && <p className='bg-green-500 p-2 rounded-md'>{successMessage}</p>}
             </div>
             <form className='border p-8'>
                 <div className="mb-6">

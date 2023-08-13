@@ -15,7 +15,7 @@ const BodyHeader = () => {
 
                 </div>
 
-                <Link to="our-menu"   className=' p-2 bg-yellow-400 px-4  hover:bg-yellow-500 '>
+                <Link to="home/our-menu"   className=' p-2 bg-yellow-400 px-4  hover:bg-yellow-500 '>
                     Order Now
                 </Link>
         </div>

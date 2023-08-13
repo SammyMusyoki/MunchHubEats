@@ -12,9 +12,9 @@ const Card = ({dat}) => {
             
             <div class="p-5">
                 <a href="/">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{dat.name}</h5>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{dat.restaurant_name}</h5>
                 </a>
-                <p class="mb-3 text-gray-700 dark:text-gray-400 font-semibold"><span className='text-xl text-black'>Contact: </span>{dat.contact}</p>
+                <p class="mb-3 text-gray-700 dark:text-gray-400 font-semibold"><span className='text-xl text-black'>Contact: </span>{dat.contact_number}</p>
                 <a href="/" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-yellow-400 rounded-lg hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 
                     Order Now

@@ -3,74 +3,44 @@ import { Link } from 'react-router-dom'
 import { useUserAuth } from '../../utils/UserAuthContext'
 
 const Registration = () => {
-  const { authenticated, setAuthenticated, isAdmin, logoutUser, loginUser, setUser } = useUserAuth()
+  const { user, isAdmin, logoutUser, authenticaated} = useUserAuth()
+  // const authenticated = localStorage.getItem('token');
 
   return (
     <React.Fragment>
       <div className="w-64 flex flex-col items-start justify-start bg-gray-900 p-4">
-        <div className=" ">
-          {authenticated ? (
-            <div className='flex flex-col gap-3 w-full items-start justify-start'>
-              {
+        <div className=''>
+          {
+            user && authenticaated ? (
+              <div className='flex flex-col gap-3 w-full items-start justify-start'>
+                {
                 isAdmin && (
-                <Link
-                  to="sign"
-                  className="flex items-center justify-center  rounded-md text-gray-50 py-1"
-                >
+                  <Link to='home/admin-panel' className='py-1 text-gray-50'>
                   Admin Panel
-                </Link>
+                  </Link>
                 )
-              }
-              <button
-              onClick={logoutUser}
-                to="login"
-                className=" rounded-md py-1 text-white items-center justify-center"
-              >
-                Logout
-              </button>
-              <Link className="text-white" to="/">
-                Profile
-              </Link>
-              <Link className="text-white" to="addyourrestaurant">
-                Favourites
-              </Link>
-        {/* <div className='w-64 flex flex-col items-center justify-start bg-gray-900 p-4' >
-            <div className='flex flex-col gap-3 '>
-                <Link to="sign" className='flex items-center justify-center border rounded-md text-gray-50 py-1'>Sign Up</Link>
-                <Link to='login' className='flex border rounded-md py-1 text-black bg-white items-center justify-center'>Log in</Link>
-                <Link className='text-white' to="/">Create a business account</Link>
-                <Link className='text-white' to="addyourrestaurant">Add your restaurant</Link>
-                <Link className='text-white' to="/">Sign up to deliver</Link>
-                <Link className='text-white' to="admin-panel">Admin dashboard</Link> */}
-
-            </div>
-          ) : (
-            <div className='flex flex-col gap-3'>
-              <Link
-                to="sign"
-                className="flex items-center justify-center border rounded-md text-gray-50 py-1"
-              >
-                Sign Up
-              </Link>
-              <Link
-              to="/login"
-                className="flex border rounded-md py-1 text-black bg-white items-center justify-center"
-              >
-                Log in
-              </Link>
-              <Link className="text-white" to="/">
-                Create a business account
-              </Link>
-              <Link className="text-white" to="addyourrestaurant">
-                Add your restaurant
-              </Link>
-              <Link className="text-white" to="/">
-                Sign up to deliver
-              </Link>
-            </div>
-          )}
+          }
+          <button onClick={logoutUser} className='text-gray-50 py-1'>
+            Log Out
+          </button>
+          <Link to='home/profile' className='text-gray-50'>
+            Profile
+          </Link>
+          <Link to='home/favourites' className='text-gray-50'>
+            Favourites
+          </Link>
         </div>
-      </div>
+      ) : (
+        <div className='flex flex-col gap-3'>
+          <Link className='text-gray-950 py-1 flex border rounded-md bg-gray-50 items-center justify-center' to='sign'>Register</Link>
+          <Link className='text-gray-50 py-1 flex border rounded-md bg-black items-center justify-center' to='login'>Log In</Link>
+          <Link className='text-gray-50 py-1' to='/'>Create A Business Account</Link>
+          <Link className='text-gray-50 py-1' to='restaurant-owner'>Add Your Own Restaurant</Link>
+          <Link className='text-gray-50 py-1' to='/driver'>Sign Up To Deliver</Link>
+        </div>
+      )}
+    </div>
+  </div>
     </React.Fragment>
   );
 }

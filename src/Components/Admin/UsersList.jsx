@@ -5,8 +5,9 @@ const UsersList = () => {
   const { users  } = useUserAuth();
   return (
     <React.Fragment>
-<section className='mx-auto max-w-6xl '>
-                <div>
+        <section className='w-full relative isolate'>
+            <div className='mx-auto max-w-[1560px] px-6 py-6'>
+                <div className='overflow-y-scroll scrollbar-hide h-screen'>
                     <div className='flex items-center justify-between mb-6'>
                         <h1 className='font-bold'>Restaurants list</h1>
                         <button className='py-2 text-gray-100 px-2 text-sm bg-yellow-400 rounded-md'>Create user</button>
@@ -48,16 +49,16 @@ const UsersList = () => {
                                             <td class="px-6 py-4">
                                                 {user.email}
                                             </td>
-                                            <td class="px-6 py-4">
+                                            <td class="px-6 py-4 line-clamp-1 w-40">
                                                 {user.password}
                                             </td>
                                             <td class="px-6 py-4 line-clamp-1 w-40">
                                                 {user.type}
                                             </td>
-                                            <td class="px-6 py-4 line-clamp-1 w-40">
+                                            <td class="px-6 py-4">
                                                 {user.activity}
                                             </td>
-                                            <td class="px-6 py-4 line-clamp-1 w-40">
+                                            <td class="px-6 py-4">
                                                 {user.blocked}
                                             </td>
                                             <td class="px-6 py-4">
@@ -68,7 +69,9 @@ const UsersList = () => {
                                 }            
                             </tbody>
                         </table>
-                    </div>
+                    </div>                    
+                </div>
+
                 </div>
             </section>
     </React.Fragment>

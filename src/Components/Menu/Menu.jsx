@@ -2,7 +2,7 @@ import React from 'react'
 import MenuCard from "./Features/MenuCard.jsx"
 import { useCart } from '../../utils/CartContext.js'
 
-const Menu = ( { menu }) => {
+const Menu = ( { menu, numberOfItemsToShow }) => {
     const { cartDispatch } = useCart();
 
     const addToCart = (product) => {
@@ -11,8 +11,12 @@ const Menu = ( { menu }) => {
         payload: product,
       });
     };
+  
+  const startIndex = Math.max(0, menu.length - numberOfItemsToShow)
 
-  const menuData = menu.map((data) => (
+  const lastItems = menu.slice(startIndex)
+
+  const menuData = lastItems.map((data) => (
         <MenuCard data={data} key={data.menu_id} addToCart={addToCart}/>
   ))
 

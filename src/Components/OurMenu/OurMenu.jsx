@@ -13,22 +13,20 @@ const OurMenu = () => {
     useEffect(() => {
       getAllMenus()
     }, [])
-const getAllMenus = async () => {
-    // setIsLoading(true);
+    const getAllMenus = async () => {
+        // setIsLoading(true);
 
-    try {
-        const response = await fetch(`${baseURL}/menus`, {
-          mode: 'no-cors'
-        });
-        const data = await response.json();
-        setMenu(data);
-        console.log('All Menus Fetched Successfully');
-    } catch (err) {
-        console.log("Error fetching Owners", err);
-    }
+        try {
+            const response = await fetch("http://127.0.0.1:5000/menus");
+            const data = await response.json();
+            setMenu(data);
+            console.log('All Menus Fetched Successfully');
+        } catch (err) {
+            console.log("Error fetching Owners", err);
+        }
 
-    // setIsLoading(false);
-};
+        // setIsLoading(false);
+    };
 
   const { cartDispatch } = useCart()
 

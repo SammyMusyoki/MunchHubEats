@@ -1,25 +1,33 @@
 import React, { useState } from 'react'
 import { useUserAuth } from '../../utils/UserAuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Sign = () => {
     const { registerUser } = useUserAuth()
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const [confirm_password, setConfirmPassword] = useState("");
     const [userRole, setUserRole] = useState("customer");
+    const [blocked, setBlocked] = useState(null)
+    const [activity, setActivity] = useState(null)
+
+
+    const navigate = useNavigate()
 
 
     const userInfo = {
         username,
         email,
         password,
-        confirmPassword,
-        user_role: userRole
+        confirm_password,
+        type: userRole,
+        blocked,
+        activity
     };
     const handleRegister = (e) => {
         e.preventDefault();
-        registerUser(userInfo);
+        registerUser(userInfo, navigate);
     };
         const handleNavigateLogin = () => {
           window.location.href = "login";
