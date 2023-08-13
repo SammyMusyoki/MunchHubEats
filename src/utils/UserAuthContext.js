@@ -118,16 +118,13 @@ const registerUser = async (userInfo) => {
             },
             body: JSON.stringify(userInfo),
         });
+        console.log(userInfo)
 
         if (response.status === 201) {
-            const { token, user, redirect_url } = await response.json();
+            const { token, user} = await response.json();
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user));
             console.log('User registered successfully');
-
-            if (redirect_url) {
-                window.location.href = redirect_url;
-            }
         }
     } catch (error) {
         console.log(error, 'Registration failed');
@@ -148,8 +145,8 @@ const getAllOwners = async () => {
         const response = await fetch(`${baseURL}/owners`, {
             mode: 'no-cors'
         });
-        const data = await response.json();
-        setOwners(data);
+        const response_data = await response.json();
+        setOwners(response_data);
         console.log('All Owners Fetched Successfully');
     } catch (err) {
         console.log("Error fetching Owners", err);
